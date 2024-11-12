@@ -47,6 +47,13 @@ class User extends Authenticatable
         ];
     }
 
+    public function canAccessFilament(): bool
+    {
+        // Define your access logic here
+        // For example, only allow users with the "admin" role
+        return $this->hasRole('admin');
+    }
+
     public function posts(): HasMany{
         return $this->hasMany(Post::class);
     }
