@@ -45,7 +45,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category): bool
     {
-        //
+        return true;
     }
 
     /**

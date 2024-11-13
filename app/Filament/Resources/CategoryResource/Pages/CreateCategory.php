@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateCategory extends CreateRecord
 {
     protected static string $resource = CategoryResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        // Redirect to the Post index page after creation
+        return CategoryResource::getUrl('index');
+    }
 }

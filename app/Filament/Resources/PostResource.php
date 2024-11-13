@@ -9,6 +9,8 @@ use App\Models\Post;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -26,7 +28,9 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-up-on-square-stack';
+
+    protected static ?string $navigationGroup = 'Posts';
 
     public static function form(Form $form): Form
     {
@@ -34,7 +38,14 @@ class PostResource extends Resource
             ->schema([
                 TextInput::make('title')->required()->columnSpan(1),
 
-                Textarea::make('body')->required()->columnSpan(1),
+                RichEditor::make('body')
+                ->label('Content')
+                ->required()
+                ->toolbarButtons([
+                    'bold', 'italic', 'underline', 'strike', 'h1', 'h2', 'h3', 
+        'bulletList', 'orderedList', 'blockquote', 'link', 'codeBlock', 
+        'horizontalRule', 'image', 'alignLeft', 'alignCenter', 'alignRight'
+                ]),  // Customize toolbar as needed
 
                 Hidden::make('user_id')
                 ->default(Auth::id())  // Set logged-in user ID by default
@@ -57,7 +68,7 @@ class PostResource extends Resource
                 TextColumn::make('title')->sortable()->limit(30),
                 TextColumn::make('body')->limit(50),
                 TextColumn::make('category.name'),
-                TextColumn::make('user.name'),
+                TextColumn::make('user.name')->badge(),
                 TextColumn::make('created_at')
                 ->label('Created At')
                 ->sortable()  // Make the created_at column sortable

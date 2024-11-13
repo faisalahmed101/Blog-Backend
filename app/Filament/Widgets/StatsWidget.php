@@ -14,12 +14,18 @@ class StatsWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
+            Stat::make('Total Views', Post::sum('views'))
+            ->description('Total post views'),
+
+            Stat::make('Posts', Post::count())
+            ->description('Total Posts'),
+
             Stat::make('Users', User::count())
             ->description('All registered users')
             ->descriptionIcon('heroicon-m-user-group', IconPosition::Before),
 
-            Stat::make('Posts', Post::count()),
-            Stat::make('Categories', Category::count()),
+            Stat::make('Categories', Category::count())
+            ->description('All categories'),
             
         ];
     }
